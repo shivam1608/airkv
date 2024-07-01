@@ -1,8 +1,8 @@
 {
   "name": "airkv",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "main": "dist/airkv.js",
+  "module": "dist/airkv.mjs",
+  "types": "dist/airkv.d.ts",
   "scripts": {
     "build" : "tsup"
   },

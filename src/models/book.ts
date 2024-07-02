@@ -2,8 +2,8 @@ import type { BookData, BookSchemaOptions } from "../global/types";
 
 class Book{
 
-    private name : string;
-    private description : string;
+    public name : string;
+    public description : string;
 
     constructor(data : BookData){
         this.name = data.name;

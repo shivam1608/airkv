@@ -43,11 +43,11 @@ class AirKV {
     async findAirbase(name : string){
         let response = await this.IO.get("/meta/bases");
         let offset = response.data.offset;
-        const bases = [];
+        const bases : {name : string , id : string}[] = [];
         
         do{
 
-            bases.push(...response.data.bases.filter((v : {name : string})=>{
+            bases.push(...response.data.bases.filter((v : {name : string , id : string})=>{
                 let id : string = v.name;
                 if(id.includes("#")){
                     id = id.substring(0 , id.indexOf("#"));
@@ -70,8 +70,14 @@ class AirKV {
     
             response.data.id = bases[i].id;
             response.data.name = bases[i].name;
-            response.data.books = response.data.tables;
+            response.data.books = response.data.tables.map((v : {name : string , id : string})=>{
+                return {...v , 
+                    airbaseId : bases[i].id,
+                    _IO : this.IO
+                }
+            });
             response.data._extended = this.extendDB;
+            response.data._IO = this.IO;
 
             airbases.push(new Airbase(response.data));
         }

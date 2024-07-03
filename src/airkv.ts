@@ -2,6 +2,7 @@ import type { AxiosInstance } from "axios";
 import { IOAdapter } from "./io/io";
 import type { BookSchema } from "./global/types";
 import { Airbase } from "./models/airbase";
+import { BookType } from "./enums/book_type";
 
 type Options = {
     token : string,
@@ -15,15 +16,12 @@ class AirKV {
     private token : string;
     private workspaceId : string;
     private IO : AxiosInstance;
-    private extendDB : boolean;
 
 
     constructor(options : Options){
        this.token = options.token;
        this.workspaceId = options.workspaceId;
        this.IO = IOAdapter(this.token);
-
-       this.extendDB = options.extendDB?true:false;
 
     }
 
@@ -32,11 +30,23 @@ class AirKV {
         const response = await this.IO.post("/meta/bases" , {
             name : name,
             workspaceId : this.workspaceId,
-            tables : [...bookSchema]
+            tables : [...bookSchema , {
+                name : "_airbase",
+                description : "Stores the metadata for airkv. Deleting this may break airkv instance",
+                fields : [
+                    {
+                        name: "KEY",
+                        type: "singleLineText"
+                      },
+                      {
+                        VALUE: "Address",
+                        type: BookType.TEXT
+                      },
+                ]
+            }]
         });
 
         response.data.books = response.data.tables;
-        response.data._extended = this.extendDB;
         return new Airbase(response.data);
     }
 
@@ -70,13 +80,15 @@ class AirKV {
     
             response.data.id = bases[i].id;
             response.data.name = bases[i].name;
+
+            const metadata = response.data.tables.filter((v:any)=>v.name === "_airkv")[0];
             response.data.books = response.data.tables.map((v : {name : string , id : string})=>{
                 return {...v , 
                     airbaseId : bases[i].id,
-                    _IO : this.IO
+                    _IO : this.IO,
+                    metadata : metadata || null
                 }
             });
-            response.data._extended = this.extendDB;
             response.data._IO = this.IO;
 
             airbases.push(new Airbase(response.data));

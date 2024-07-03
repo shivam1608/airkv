@@ -1,6 +1,7 @@
 import type { AxiosInstance } from "axios"
 import type { BookType } from "../enums/book_type"
 import type { Airbase } from "../models/airbase"
+import type { Book } from "../models/book"
 
 export type BookData = {
     id : string,
@@ -8,7 +9,8 @@ export type BookData = {
     description : string,
     type : BookType,
     airbaseId : string,
-    _IO : AxiosInstance
+    _IO : AxiosInstance,
+    metadata : Book
 }
 
 export type Record = {

@@ -9,6 +9,7 @@ class Book{
     private id : string;
     private airbaseId : string;
     private _IO : AxiosInstance;
+    private metadata : Book;
 
     constructor(data : BookData){
         this.name = data.name;
@@ -16,6 +17,7 @@ class Book{
         this.airbaseId = data.airbaseId;
         this._IO = data._IO;
         this.id = data.id;
+        this.metadata = data.metadata;
     }
 
 

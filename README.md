@@ -1,7 +1,9 @@
 # airkv
 **AirKV** is a key-value database storage library built on top of Airtable.
-
+> [!CAUTION]
 > **Note**: This project was developed in my free time to learn more about creating npm packages. However, Airtable recently introduced a soft limit of 1000 API requests per month for free accounts, which can restrict the package’s functionality for high-demand use cases.
+![image](https://github.com/user-attachments/assets/b8c1fbb9-b27d-4efa-bde3-55bc2bf89227)
+
 
 ### Version `0.0.1`
 

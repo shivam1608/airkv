@@ -1,13 +1,19 @@
 {
   "name": "airkv",
-  "module": "index.ts",
+  "version": "0.0.1",
+  "main": "dist/airkv.cjs",
+  "module": "dist/airkv.js",
+  "types": "dist/airkv.d.ts",
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest",
     "tsup": "^8.3.5"
   },
+  "scripts": {
+    "build": "tsup"
+  },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.6.3"
   },
   "dependencies": {
     "axios": "^1.7.7"

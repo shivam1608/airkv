@@ -7,14 +7,16 @@ class AirKV {
     private token : string;
     private workspaceId : string;
     private IO : AxiosInstance;
+    private logging : boolean;
 
     constructor(options : AirKVOptions){
         this.token = options.token;
         this.workspaceId = options.workspaceId;
         this.IO = IOAdapter(this.token);
+        this.logging = options.logging || false; 
     }
 
-    async findAirbase(name : string){
+    private async findAirbase(name : string){
         let response = await this.IO.get("/meta/bases");
 
         let offset = response.data.offset;
@@ -33,11 +35,12 @@ class AirKV {
 
         }while(offset);
 
-        if(bases.length === 0){
-            return null;
-        }
+        return new Airbase(name , bases , this.IO , this.workspaceId , this.logging);
+    }
 
-        return new Airbase(bases[0].name , bases , this.IO);
+
+    async airbase(name : string){
+        return this.findAirbase(name);
     }
 
 }

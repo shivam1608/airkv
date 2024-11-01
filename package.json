@@ -1,6 +1,6 @@
 {
   "name": "airkv",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/airkv.cjs",
   "module": "dist/airkv.js",
   "types": "dist/airkv.d.ts",
